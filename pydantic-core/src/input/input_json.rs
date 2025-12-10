@@ -285,7 +285,8 @@ impl<'py, 'data> Input<'py> for JsonValue<'data> {
     fn validate_iter(&self) -> ValResult<GenericIterator<'static>> {
         match self {
             JsonValue::Array(a) => Ok(GenericIterator::from(a.clone()).into_static()),
-            JsonValue::Str(s) => Ok(string_to_vec(s).into()),
+            //JSON strings are NOT iterables
+            // JsonValue::Str(s) => Ok(string_to_vec(s).into()),
             JsonValue::Object(object) => {
                 // return keys iterator to match python's behavior
                 // FIXME jiter doesn't deduplicate keys, should probably do that here before iteration.
